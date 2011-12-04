@@ -1,6 +1,6 @@
 {
     "name" : "shp2json",
-    "description" : "Streaming conversion of shapefile.zip files into GeoJSON using ogr2ogr",
+    "description" : "Convert shapefile zip archives into GeoJSON using ogr2ogr with a streaming interface",
     "version" : "0.0.0",
     "repository" : {
         "type" : "git",
