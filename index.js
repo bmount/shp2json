@@ -2,6 +2,7 @@ var spawn = require('child_process').spawn;
 var fs = require('fs');
 var path = require('path');
 var seq = require('seq');
+var findit = require('findit');
 var BufferedStream = require('morestreams').BufferedStream;
 
 module.exports = function (inStream) {
@@ -29,15 +30,19 @@ module.exports = function (inStream) {
                 next(code < 3 ? null : 'error in unzip: code ' + code)
             });
         })
-        .seq(function () { fs.readdir(tmpDir, this) })
-        .seq(function (files) {
-            var shpFiles = files.filter(function (file) {
-                return file.match(/\.shp$/i)
+        .seq_(function (next) {
+            var s = findit(tmpDir);
+            var files = [];
+            s.on('file', function (file) {
+                if (file.match(/\.shp$/i)) files.push(file);
             });
-            if (shpFiles.length === 0) {
+            s.on('end', next.ok.bind(null, files));
+        })
+        .seq(function (files) {
+            if (files.length === 0) {
                 this('no .shp files found in the archive');
             }
-            else if (shpFiles.length > 1) {
+            else if (files.length > 1) {
                 this('multiple .shp files found in the archive,'
                     + ' expecting a single file')
             }
@@ -46,7 +51,7 @@ module.exports = function (inStream) {
                     '-f', 'GeoJSON',
                     '-skipfailures',
                     'stdout',
-                    path.join(tmpDir, shpFiles[0]),
+                    files[0],
                 ]);
                 ps.stdout.pipe(outStream, { end : false });
                 ps.stderr.pipe(outStream, { end : false });
