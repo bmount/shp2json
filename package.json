@@ -31,7 +31,7 @@
     },
     "dependencies" : {
         "seq" : "0.3.x",
-        "morestreams" : "0.2.x"
+        "morestreams" : "0.1.x"
     },
     "devDependencies" : {
         "tap" : "0.0.x"
