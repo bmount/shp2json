@@ -1,0 +1,48 @@
+{
+    "name" : "shp2json",
+    "description" : "Streaming conversion of shapefile.zip files into GeoJSON using ogr2ogr",
+    "version" : "0.0.0",
+    "repository" : {
+        "type" : "git",
+        "url" : "git://github.com/substack/shp2json.git"
+    },
+    "main" : "index.js",
+    "bin" : {
+        "shp2json" : "bin/cli.js"
+    },
+    "keywords" : [
+        "shapefile",
+        "shp",
+        "zip",
+        "stream",
+        "convert",
+        "geojson",
+        "geo",
+        "gis",
+        "json"
+    ],
+    "directories" : {
+        "lib" : ".",
+        "example" : "example",
+        "test" : "test"
+    },
+    "scripts" : {
+        "test" : "tap test/*.js"
+    },
+    "dependencies" : {
+        "seq" : "0.3.x",
+        "morestreams" : "0.2.x"
+    },
+    "devDependencies" : {
+        "tap" : "0.0.x"
+    },
+    "engines" : {
+        "node" : ">=0.4.0"
+    },
+    "license" : "MIT",
+    "author" : {
+        "name" : "James Halliday",
+        "email" : "mail@substack.net",
+        "url" : "http://substack.net"
+    }
+}
